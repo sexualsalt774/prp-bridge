@@ -1,0 +1,30 @@
+name: sync-repos
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - 'versions/**'
+
+jobs:
+  notify-changes:
+    runs-on: self-hosted
+
+    steps:
+    - name: Prepare JSON payload
+      id: prepare-payload
+      run: |
+        echo '{
+          "added": [],
+          "modified": [],
+          "removed": [],
+          "renamed": []
+        }' > payload.json
+
+    - name: Send POST request to endpoint
+      run: |
+        curl -X POST "${{ secrets.ENDPOINT_URL }}" \
+          -H "Authorization: Bearer ${{ secrets.NEW_COMMIT_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d @payload.json
