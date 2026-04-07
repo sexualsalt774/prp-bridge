@@ -1,9 +1,11 @@
 {
   "version": "1.0.3",
   "changes": [
-      "Added SQL file to recreate tables incase any tables aren't created properly"
+      "Added SQL file to recreate tables incase any tables aren't created properly",
+      "Fixed pinkslip plate claiming possible error race condition"
   ],
   "filesAffected": [
+      "server/pinkslips.lua",
       "races.sql"
   ]
 }
